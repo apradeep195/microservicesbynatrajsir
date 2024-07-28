@@ -1,0 +1,15 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Balance Page</h1>
+<h5>Your Current Balace  is :: <span th:text="${balance}"></span></h5>
+<a th:href="@{/bank/}">Home</a>
+<br>
+
+<a th:href="@{/logout}">logout</a>
+
+</body>
+</html>

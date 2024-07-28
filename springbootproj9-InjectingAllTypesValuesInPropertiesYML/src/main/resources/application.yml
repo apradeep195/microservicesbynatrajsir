@@ -1,0 +1,34 @@
+# usng yml
+emp: 
+ info: 
+   name: raja
+   id: 1001
+#array prperty
+   nick-names:
+    - chinna
+    - khanna
+    - munna 
+    #List level
+   team-members:
+    - ravi 
+    - rajesh 
+    - ramesh 
+   phone-numbers: 
+    - 9999999999 
+    - 8888888888 
+    - 7777777777 
+   #MAP PROPERTY
+   id-details: 
+    adhar: 800028226536 
+    panNo: AXLPA6879DPAN 
+    voterID: AXLPA6879DVOTER 
+    licnce: AXLPA6879D 
+     #has property 
+   com-detail: 
+    title: HEG LIMITED 
+    location: RAISEN 
+    size: 56520 
+   
+     
+
+ 

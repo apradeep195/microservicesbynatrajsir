@@ -1,0 +1,48 @@
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <!-- Base Defination -->
+    <definition name="baseDef" template="/WEB-INF/pages/layout.jsp">
+        <put-attribute name="title" value="" type="string" />
+        <put-attribute name="header" value="/WEB-INF/pages/header.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/pages/footer.jsp" />        
+        <put-attribute name="body" value="" />
+        <put-attribute name="advertisement" value="/WEB-INF/pages/advertisement.jsp" />
+         <put-attribute name="menu" value="/WEB-INF/pages/menu.jsp" />
+    </definition>
+ 
+     <!-- Base Defination -->
+    <definition name="homePageDef" extends="baseDef">  
+      <put-attribute name="title" value="HOME PAGE" type="string" />                
+        <put-attribute name="body" value="/WEB-INF/pages/home.jsp" />       
+    </definition>
+ 
+   <!-- Base Defination -->
+    <definition name="facultiesPageDef" extends="baseDef">  
+      <put-attribute name="title" value="FACULITY PAGE" type="string" />                
+        <put-attribute name="body" value="/WEB-INF/pages/faculties.jsp" />       
+    </definition>
+ 
+ <!-- Base Defination -->
+    <definition name="entertainmentPageDef" extends="baseDef">  
+      <put-attribute name="title" value="ENTERTAINMENT PAGE" type="string" />                
+        <put-attribute name="body" value="/WEB-INF/pages/entertainment.jsp" />       
+    </definition>
+    
+    <!-- Base Defination -->
+    <definition name="coursesPageDef" extends="baseDef">  
+      <put-attribute name="title" value="COURSES PAGE" type="string" />                
+        <put-attribute name="body" value="/WEB-INF/pages/courses.jsp" />       
+    </definition>
+    
+    <!-- Base Defination -->
+    <definition name="trainingPageDef" extends="baseDef">  
+      <put-attribute name="title" value="TRAINING MODE PAGE" type="string" />                
+        <put-attribute name="body" value="/WEB-INF/pages/trainingMode.jsp" />       
+    </definition>
+    
+</tiles-definitions>
+                
