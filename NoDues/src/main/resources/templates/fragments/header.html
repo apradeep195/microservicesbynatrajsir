@@ -1,0 +1,21 @@
+
+<nav th:fragment="header" class="navbar navbar-expand-lg navbar-white bg-white header-navbar" >
+    <a class="navbar-brand" style="color: black;" href="javascript:void(0)">Applicant Bio Data Portal</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navb">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <ul class="navbar-nav mr-auto">
+             <li class="nav-item">
+                <a class="nav-link  min-a" th:href="@{/admin/upload}">Upload</a>
+                </li>
+            <li class="nav-item">
+        <a class="nav-link  min-a" th:href="@{logout}">Logout</a>
+        </li>
+        </ul>
+      </form>
+    </div>
+  </nav>

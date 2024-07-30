@@ -1,0 +1,27 @@
+.cselt{
+	
+	border:1px solid gray;
+    height: 30px;
+    outline: none;
+    font-weight: bold;
+    font-size: .6rem;
+    border-radius: 5px;
+}
+.header-content h3{
+    font-size: 1.7rem;
+}
+.header-content h7{
+    font-size: .7rem;
+}
+.upbtn{
+    margin-bottom: 0px;
+    font-weight: bold;
+    font-size: .6rem !important;
+}
+.h-small{
+    display: block;
+    padding: 0px;
+    margin: 0px;
+    font-weight: bold;
+
+}

@@ -1,0 +1,17 @@
+.header-navbar
+{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.min-a:hover{
+    border: 1px solid #BFA161;
+}
+.min-a
+{
+	margin:0px 5px 0px 5px;
+    color: #BFA161;
+    font-family: 'Montserrat', sans-serif;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 2px;
+    font-size: 13px;
+}

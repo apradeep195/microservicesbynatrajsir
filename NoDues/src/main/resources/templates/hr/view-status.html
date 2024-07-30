@@ -1,0 +1,173 @@
+<html>
+<head>
+<title>View Status | NDMS</title>
+<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/fontawesome/6.1.1/all.min.css}" rel="stylesheet" />
+<script type="text/javascript"
+	th:src="@{/js/bootstrap/bootstrap.min.js}"> </script>
+<link th:href="@{/css/font.css}" rel="stylesheet" />
+<link th:href="@{/css/Pdfstyle.css}" rel="stylesheet" />
+<script th:src="@{/js/fontawesome.js}"></script>
+
+<style>
+td{
+ font-size:15px;
+}
+th{
+font-size:16px;
+}
+.right , .left, .to,#footer{
+font-size:17px;
+}
+
+#myTable td{
+padding: 9px 5px 9px 5px !important;
+}
+</style>
+
+</head>
+<body style="color: black !important" >
+   <div align="center">
+         <input type="button" id="btnprint" value="Print" onclick="print_page()" class="btn btn-dark mt-2" style="font-size:11px">
+
+        
+   
+      <script type="text/javascript">
+            function print_page() {
+                    var ButtonControl = document.getElementById("btnprint");
+                    ButtonControl.style.visibility = "hidden";
+                    window.print(); 
+                    }
+                     function close_print() {
+                 var ButtonControl = document.getElementById("btncls");
+                    ButtonControl.style.visibility = "hidden";
+                    window.close(); 
+                    }
+                    
+        </script> 
+      </div> 
+      </div>
+     
+    <header class="clearfix border-dark border-bottom">
+      <div id="logo"> 
+      
+        <img th:src="@{/images_st/HEG_LOGO_CUT.jpg}">
+      </div>
+      <div id="company" style="color: black !important" >
+          <h2 class="name">HEG LIMITED, MANDIDEEP</h2>
+        <div>NO DUES CERTIFICATE</div>
+      </div>
+      
+    </header>
+    <main>
+      <div id="details" class="clearfix">
+        <div id="">
+            <div class="to" style="color: black !important" >Mr./Mrs.   <b><span th:text="${empDetails.EMPNAME}"></span> </b>   E.C. <b><span th:text="${empDetails.EMPNO}"></span></b>  Designation: <b><span th:text="${empDetails.DESG}"></span></b>  Department: <b><span th:text="${empDetails.DEPT}"></span></b>  
+            has  <b><span th:text="${empDetails.REASONDESC}"></span></b> on <b><span th:text="${empDetails.RESIGN_DATE!=null?#dates.format(empDetails.RESIGN_DATE,'dd-MMM-yyyy'):'-'}"></span></b> and 
+                expected to be relieved by the end of working hours of <b><span th:text="${empDetails.LAST_WORKING_DATE!=null?#dates.format(empDetails.LAST_WORKING_DATE,'dd-MMM-yyyy'):'-'}"> </span> </b>.
+           <br>Please indicate dues, if any against him.</div>          
+        </div>
+        
+      </div>
+           <table style="margin-bottom: 0 ">
+               <tr>
+                   <td><div align="left">Date : <span th:text="${empDetails.INITIATE_DATE!=null?#dates.format(empDetails.INITIATE_DATE,'dd-MMM-yyyy'):'-'}"></span></div></td>
+                   <td> <div align="right" style="text-align: right"><span th:text="${empDetails.INITIATEDBY}"></span><br> <font style="margin-right: 35px">HR Department</font></div></td>
+               </tr>
+                
+           </table>
+         
+          
+      <table border="0" cellspacing="0" cellpadding="0"  id="myTable">
+        <thead>
+          <tr>
+            <th >Section</th>
+            <th >Due Detail</th>
+            <th >Due Amount</th>
+            <th >Verified By</th>
+            <th >Verified Date</th>
+          </tr>
+        </thead>
+        <tbody>
+             <tr>
+            <td  class="text-left" >Authorized Signatory </td>
+            <td>  - </td>
+            <td> No Dues</TD>
+            <td><span th:text="${empDetails.HODNAME}"></span></td>
+            <td><span th:text="${empDetails.HODDATE!=null?#dates.format(empDetails.HODDATE,'dd-MMM-yyyy'):'-'}" ></span></td>
+          </tr>
+             
+             <th:block th:if="${empDetails.DESG.trim().equals('EXECUTIVE')}">
+             
+             <tr >
+            <td class="text-left" >HR</td>
+            <td  class=" border-dark border-top">Exgratia</td>
+            <td  class=" border-dark border-top" th:text="${empDetails.EXGRATIA}"></TD>
+            <td  class=" border-dark border-top"><span th:text="${empDetails.INITIATEDBY}"></span></td>
+            <td  class=" border-dark border-top"><span th:text="${empDetails.INITIATE_DATE!=null?#dates.format(empDetails.INITIATE_DATE,'dd-MMM-yyyy'):'-'}" ></span></td>
+          </tr>
+             
+            </th:block>
+             
+  
+  
+        <th:block th:each="dueChild,iter  :${dues}">
+                  <tr>
+                   <th:block th:if="${ iter.index ==0}">
+                       <td class="text-left"><span th:text="${dueChild.SECTIONNAME}"></span></td>
+                      <td class=" border-dark border-top"><span    th:text="${dueChild.DUE_DETAIL}"></span></td>
+                     <td class=" border-dark border-top"><span th:text="${dueChild.DUE_AMOUNT==0?'No Dues':dueChild.DUE_AMOUNT}"></span></td>
+                     <td class=" border-dark border-top"><span th:text="${dueChild.APPROVERNAME}"></span></td>
+                     <td class=" border-dark border-top"><span th:text="${dueChild.SUBMITTED_DATE!=null?#dates.format(dueChild.SUBMITTED_DATE,'dd-MMM-yyyy'):'-'}"></span></td>
+                   </th:block>
+                   
+                     <th:block th:if="${ iter.index > 0}">
+                      <td class="text-left"><span th:text="${dues[iter.index-1].SECTIONNAME.equals(dues[iter.index].SECTIONNAME)?'':dues[iter.index].SECTIONNAME}"></span></td>
+                      <td   th:class="${dues[iter.index-1].SECTIONNAME.equals(dues[iter.index].SECTIONNAME)?'':'border-dark border-top'}" ><span    th:text="${dueChild.DUE_DETAIL}"></span></td>
+                     <td th:class="${dues[iter.index-1].SECTIONNAME.equals(dues[iter.index].SECTIONNAME)?'':'border-dark border-top'}"  ><span th:text="${dueChild.DUE_AMOUNT==0?'No Dues':dueChild.DUE_AMOUNT}"></span></td>
+                     <td th:class="${dues[iter.index-1].SECTIONNAME.equals(dues[iter.index].SECTIONNAME)?'':'border-dark border-top'}"  ><span th:text="${dueChild.APPROVERNAME}"></span></td>
+                      <td th:class="${dues[iter.index-1].SECTIONNAME.equals(dues[iter.index].SECTIONNAME)?'':'border-dark border-top'}"  ><span  th:text="${dueChild.SUBMITTED_DATE!=null?#dates.format(dueChild.SUBMITTED_DATE,'dd-MMM-yyyy'):'-'}"></span></td>
+              
+                    </th:block>
+                  <tr>  
+        </th:block>  
+      
+        
+        </tbody>
+      </table>
+ <table class="mt-5">
+ <tbody>
+<tr><td class="text-left font-weight-bold">Date</td></tr>
+<tr><td class="text-left font-weight-bold">Address</td><td class="text-right  font-weight-bold">Employee Signature</td></tr>
+</tbody>
+</table>
+                           
+      
+      <div id="footer">        
+        <div>FINANCE:</div>
+        <div class="notice">Please arrange to make full & final payment of Mr./Mrs.&nbsp;<b><span th:text="${empDetails.EMPNAME}"></span></b>  Designation <b><span th:text="${empDetails.DESG}"></span></b> of <b><span th:text="${empDetails.DEPT}"></span></b>.</div>
+      </div>
+      <br>
+     
+    
+      <table  class="mt-5" >
+               <tr>
+                   
+                   <td> <div align="right"><b><span th:text="${empDetails.HRHODNAME}"></span></b><br>(<span th:text="${empDetails.HRHODDATE!=null?#dates.format(empDetails.HRHODDATE,'dd-MMM-yyyy'):'Axay Saxena'}"></span>)<br>HEAD(HR & IR)</div></td>
+               </tr>
+                
+           </table>
+          <hr class="border-dark" style="margin-top: 30px">
+           <div id="footer">        
+       
+        <div class="blockquote-footer">This is  a system generated document and is generated after all the required approvals in system. </div>
+         <div class="blockquote-footer">This document does not require any signature. </div>
+      </div>
+    </main>
+    
+      
+   
+  
+  </body>
+
+</html>

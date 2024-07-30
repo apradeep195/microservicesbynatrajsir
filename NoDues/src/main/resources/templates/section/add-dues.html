@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sections Pending Requests | NDMS</title>
+<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet" />	
+	<link th:href="@{/css/main.css}" rel="stylesheet" />
+	<link th:href="@{/css/navbar.css}" rel="stylesheet" />
+	<link th:href="@{/css/navbar_new.css}" rel="stylesheet" />	
+	<link th:href="@{/newCss/dataTables.bootstrap4.min.css}" rel="stylesheet">
+	<link th:href="@{/css/table.css}" rel="stylesheet" />
+	<script th:src="@{/js/fontawesome.js}"></script>
+	<script th:src="@{/js/add-dues.js}"></script>
+</head>
+<style>
+body {
+	overflow-x: hidden; /* Hide scrollbars */
+}
+
+#dues-details td {
+	padding: 10px 0px 10px 0px !important;
+}
+</style>
+<body>
+
+	<div id="wrapper">
+		<div class="sidebar-parent" style="width: 4%">
+			<div th:replace="fragments/navbar :: navbar"></div>
+			<div th:replace="fragments/modals :: template"></div>
+			<div th:replace="fragments/modals :: center-temp"></div>
+			<div th:replace="fragments/modals :: logout"></div>
+			<div th:replace="fragments/modals :: error-modal"></div>
+			<div th:replace="fragments/modals :: simple-modal"></div>
+		</div>
+		<!--Sidebar parent-->
+
+		<div class="container2  mb-3" style="padding: 15px 10px 10px 10px">
+
+
+			<div class="table-container table-responsive" style="border: none;">
+			
+			<label class="w-100 mb-3 text-center fb"
+					style="font-size: 11px !important;">Employee Details</label>
+		
+			<table class="table" id="dues-details">
+					<thead class="bg-dark">
+						<tr>
+							<th>Employee Code</th>
+							<th>Name</th>
+							<th>Designation</th>
+							<th>Department</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-bottom"	>				
+							<td th:text="${empInfo.EMPNO}"></td>
+							<td th:text="${empInfo.EMPNAME}"></td>
+							<td th:text="${empInfo.DESG}"></td>
+							<td th:text="${empInfo.DEPT}"></td>
+						</tr>
+					</tbody>
+				</table>
+			
+			
+				<label class="w-100 my-3 text-center fb"
+					style="font-size: 11px !important;">Due Details</label>
+					
+				<table class="table  " id="dues-details">
+					<thead class="bg-dark">
+						<tr>
+							<th>Req ID.</th>
+							<th>Due Details.</th>
+							<th>Due Amount</th>
+							<th>Type</th>
+							<th>Entry By</th>
+							<th>Entry Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-bottom"
+							th:each="section,iState : ${sectionDues}">
+							<td th:text="${section.REQ_ID}"></td>
+							<td th:text="${section.DUE_DETAIL}"></td>
+							<td th:text="${section.DUE_AMOUNT}"></td>
+							<td><th:block th:each="auth,iState : ${authSections}">
+									<th:block th:if="${section.SEC_ID==auth.ID}">
+										<span th:text="${auth.SEC_DESC.toUpperCase()}"></span>
+									</th:block>
+								</th:block></td>
+							<td th:text="${section.ENTRD_BY_NAME}"></td>
+							<td
+								th:text="${section.ENTERED_DATE!=null?#dates.format(section.ENTERED_DATE, 'dd-MMM-yyyy'):'-'}"></td>
+						</tr>
+					</tbody>
+				</table>
+				
+
+		 	<th:block th:if="${isEmpty==null}">
+				 <th:block th:if="${session.ROLE.contains('SECTION_AUTHORITY') AND !session.ROLE.contains('NO_SUBMIT')  }">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<label class="d-block fb">*Click on submit button to submit all the dues for approval.</label>
+					<label class="d-block fb"><span class="text-danger">*Administrator</span>&nbsp;-&nbsp;Bus / Mobile / Two-four wheeler / Executive Mess entries are must</label>	
+					 <form th:action="@{/section/submit}" method="POST" class="m-0 p-0">
+					     <input  class="d-none" th:value="${reqId}" name="reqId">
+						 <button class="btn btn-dark">Submit</button> 
+					 </form>
+				</div>
+				</th:block>
+		 	</th:block>
+				
+			 <th:block th:if="${isEmpty!=null AND error==null AND successDueSubmit==null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-danger m-0">
+						<label class="fb">No Data Found </label>
+					</div>
+				</div>
+		 	</th:block>
+		 	
+		 	
+		 		<th:block th:if="${errorDueSubmit!=null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-danger w-50 m-auto">
+						<label  class="fb" th:text="${errorDueSubmit}"> </label>
+					</div>
+				</div>
+			 </th:block>
+			 	<th:block th:if="${successDueSubmit!=null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-success w-100 m-auto">
+						<label  class="fb" th:text="${successDueSubmit}"> </label>
+					</div>
+				</div>
+			 </th:block> 
+				<label class="w-100 mb-3 text-center fb"
+					style="font-size: 11px !important;">Add Due Details</label>
+				<table class="table w-50  mx-auto ">
+					<thead class="bg-dark">
+						<tr>
+							<th>Due Details.</th>
+							<th>Due Amount</th>
+							<th>Type</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+
+					<tbody th:if="${admin==null}">
+						<tr class="border">
+							<form th:action="@{/section/addDues}" method="post">
+							<td class="td-center-fill">
+							<input class="d-none"	th:value="${reqId}" name="reqid">
+							 <input type="text" name="details" value="-- " class="inp rounded" ></td>
+							<td class="td-center-fill">
+							<input type="number"	 name="amount" value="0 " class="inp rounded"></td>
+							<td class="td-center-fill"><select class="inp rounded"
+								name="sectionid" required onchange="myFunction()">									
+									<th:block th:each="sections : ${authSections}">
+										<option th:value="${sections.ID}"
+											th:text="${sections.SEC_DESC}">Data Bank</option>
+									</th:block>
+							</select></td>
+							<td class="">
+								<button class="btn btn-dark">Add Due</button>
+							</td>
+							
+						</tr>
+						</form>
+					</tbody>
+					
+						<tbody th:if="${admin!=null}">
+					
+							<tr class="border">			
+							<td class="td-center-fill">
+							<form th:action="@{/section/addDues}" method="post">
+							<input class="d-none"	 th:value="${reqId}" name="reqid"> 
+							<input class="inp rounded" value="Bus" name="details" readonly> 
+						</td>
+							<td class="td-center-fill">
+							<input type="number" 	name="amount" class="inp rounded"></td>
+							<td class="td-center-fill" >						
+									<th:block th:each="sections : ${authSections}">
+									        <th:block th:if="${sections.ID.equals(3)}">
+									           <input class="d-none"	 th:value="${sections.ID}" name="sectionid"> 
+									           <input  class="inp rounded" th:value="${sections.SEC_DESC}" readonly>
+									        </th:block>							
+									</th:block>
+                              </td>
+							<td class="">
+								<button class="btn btn-dark">Add Due</button>
+							</td>
+							</form>	
+						   </tr>
+					
+						<tr class="border">			
+							<td class="td-center-fill">
+							<form th:action="@{/section/addDues}" method="post">
+							<input class="d-none"	 th:value="${reqId}" name="reqid"> 
+							<input class="inp rounded" value="Two/Four Wheeler" name="details" readonly> 
+						</td>
+							<td class="td-center-fill">
+							<input type="number" 	name="amount" class="inp rounded"></td>
+							<td class="td-center-fill" >						
+									<th:block th:each="sections : ${authSections}">
+									        <th:block th:if="${sections.ID.equals(3)}">
+									           <input class="d-none"	 th:value="${sections.ID}" name="sectionid"> 
+									           <input  class="inp rounded" th:value="${sections.SEC_DESC}" readonly>
+									        </th:block>							
+									</th:block>
+                              </td>
+							<td class="">
+								<button class="btn btn-dark">Add Due</button>
+							</td>
+							</form>	
+						   </tr>
+						<tr class="border">			
+							<td class="td-center-fill">
+							<form th:action="@{/section/addDues}" method="post">
+							<input class="d-none"	 th:value="${reqId}" name="reqid"> 
+							<input class="inp rounded" value="Mobile" name="details" readonly> 
+						</td>
+							<td class="td-center-fill">
+							<input type="number" 	name="amount" class="inp rounded"></td>
+							<td class="td-center-fill" >						
+									<th:block th:each="sections : ${authSections}">
+									        <th:block th:if="${sections.ID.equals(3)}">
+									           <input class="d-none"	 th:value="${sections.ID}" name="sectionid"> 
+									           <input  class="inp rounded" th:value="${sections.SEC_DESC}" readonly>
+									        </th:block>							
+									</th:block>
+                              </td>
+							<td class="">
+								<button class="btn btn-dark">Add Due</button>
+							</td>
+							</form>	
+						   </tr>
+						   					<th:block th:if="${isExcutive!=null}">
+					<tr class="border">			
+							<td class="td-center-fill">
+							<form th:action="@{/section/addDues}" method="post">
+							<input class="d-none"	 th:value="${reqId}" name="reqid"> 
+							<input class="inp rounded" value="Executive Mess" name="details" readonly> 
+						</td>
+							<td class="td-center-fill">
+							<input type="number" 	name="amount" class="inp rounded"></td>
+							<td class="td-center-fill" >						
+									<th:block th:each="sections : ${authSections}">
+									        <th:block th:if="${sections.ID.equals(3)}">
+									           <input class="d-none"	 th:value="${sections.ID}" name="sectionid"> 
+									           <input  class="inp rounded" th:value="${sections.SEC_DESC}" readonly>
+									        </th:block>							
+									</th:block>
+                              </td>
+							<td class="">
+								<button class="btn btn-dark">Add Due</button>
+							</td>
+							</form>	
+						   </tr>			
+					</th:block>	   
+											
+						<tr class="border">
+							<form th:action="@{/section/addDues}" method="post">
+							<td class="td-center-fill"><input class="d-none"
+								th:value="${reqId}" name="reqid"> <input type="text"
+								name="details" class="inp rounded"></td>
+							<td class="td-center-fill"><input type="number"
+								name="amount" class="inp rounded"></td>
+							<td class="td-center-fill"><select class="inp rounded"
+								name="sectionid" >
+									
+									<th:block th:each="sections : ${authSections}">
+										<option th:value="${sections.ID}"
+											th:text="${sections.SEC_DESC}">Data Bank</option>
+									</th:block>
+							</select></td>
+							<td class="">
+								<button class="btn btn-dark">Add Due</button>
+							</td>
+								</form>
+						</tr>					
+					</tbody>
+             </table>
+             
+             	<th:block th:if="${errorAddDues!=null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-danger w-50 m-auto">
+						<label  class="fb" th:text="${errorAddDues}"> </label>
+					</div>
+				</div>
+			 </th:block>
+			 	<th:block th:if="${successAddDues!=null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-success w-50 m-auto">
+						<label  class="fb" th:text="${successAddDues}"> </label>
+					</div>
+				</div>
+			 </th:block>
+                   
+              
+              <th:block th:if="${IT!=null}">
+                   
+                 <label class="w-100 my-3 text-center fb" style="font-size: 11px !important;">IT Specific Details<small class="text-success fb" th:if="${itSpecDetails!=null AND itSpecDetails.isSubmitted==1}"> (Already Submitted) </small><small class="fb d-block" >*Click on buttons to switch b/w Yes or No</small></label>
+                 <table class="table w-100  mx-auto ">
+                     <thead class="bg-dark">
+                         <tr>      
+                             <th>ERP User <br>Name</th>   
+                             <th>ERP Status</th>   
+                             <th>ERP Action</th>           
+                             <th>Mail Type</th>
+                             <th>Mail Removed</th>                           
+                             <th>Automail Status</th>
+                             <th>Automail Removed</th>
+                             <th>PC / Printer<br>(Default - No)</th>  
+                             <th>PC / Printer<br>Returned</th>      
+                             <th>Remark<br>(Not Required)</th>                             
+                             <th>Action</th>     
+                         </tr>
+                     </thead>
+ 
+                     <tbody>
+                         <tr class="border">
+                             <form  th:action="@{/section/it-spec/save}"   method="POST">           
+                         <td class="border td-center-fill">
+							  <input type="text" name="erpLoginName" onkeyup="validateLoginName(this)" style="text-align: center;" th:value="${itSpecDetails.erpUser!=null?itSpecDetails.erpUser:'NA'}" class="inp rounded" reqiured>							 
+							
+                         </td>
+                         
+                         <td class="border">
+							 <input class="d-none" th:value="${itSpecDetails.id}" name="id"> 
+                             <input class="d-none" th:value="${reqId}" name="reqId">  
+                             <input name="erpLogin"  id="erpLogin" type="text"    th:class="${itSpecDetails.erpLogin==0?'btn btn-danger w-25 ':'btn btn-success w-25 '}" style="cursor:pointer" readonly  th:value="${itSpecDetails.erpLogin==0?'No':'Yes'}"   onclick="swapBtnValues(this)">
+                         </td>
+
+						<td class="border">
+							<input class="d-none" th:value="${itSpecDetails.id}" name="id"> 
+                            <input class="d-none" th:value="${reqId}" name="reqId"> 
+                            <input name="erpLoginAction"   type="text"    class="btn btn-danger w-25" style="cursor:pointer" readonly  value="No"   onclick="swapBtnValues(this)">
+                         </td>
+                                    
+
+						<td class="td-center-fill" >
+                               <!-- 	<label  class="fb"   disabled  th:text="${itSpecDetails.mailType}"></label>-->
+                                	<select  class="inp fb rounded"  name="mailType">
+										<option value="NA" th:selected="${itSpecDetails.mailType.equals('NA')}">NA</option>
+										<option value="EXTERNAL" th:selected="${itSpecDetails.mailType.equals('EXTERNAL')}">EXTERNAL</option>
+										<option value="INTERNAL" th:selected="${itSpecDetails.mailType.equals('INTERNAL')}">INTERNAL</option>
+									</select>
+                                	
+                        </td>
+						
+						<td class="border">
+                                  <input name="mailIdRemoved"   type="text"   th:class="${itSpecDetails.mailIdRemoved==0?'btn btn-danger w-25':'btn btn-success  w-25'}"   style="cursor:pointer" readonly  th:value="${itSpecDetails.mailIdRemoved==0?'No':'Yes'}"    onclick="swapBtnValues(this)">
+						</td>
+
+						<td class="border">
+                                	<input    name="autoMail"  type="text"  th:class="${itSpecDetails.autoMail==0?'btn btn-danger w-25 ':'btn btn-success w-25'}"  style="cursor:pointer" readonly  th:value="${itSpecDetails.autoMail==0?'No':'Yes'}"   onclick="swapBtnValues(this)"> 
+                        </td>
+                        <td class="border">
+                                	<input    name="automailRemoved"  type="text"  th:class="${itSpecDetails.automailRemoved==0?'btn btn-danger w-25 ':'btn btn-success w-25'}"  style="cursor:pointer" readonly  th:value="${itSpecDetails.automailRemoved==0?'No':'Yes'}"   onclick="swapBtnValues(this)">
+                        </td>
+                        <td class="border">
+                                	<input class="btn btn-danger w-25"  type="text" name="pcPrinter"   th:class="${itSpecDetails.pcPrinter==null  || itSpecDetails.pcPrinter==0?'btn btn-danger w-25 ':'btn btn-success w-25'}" th:value="${itSpecDetails.pcPrinter==null || itSpecDetails.pcPrinter==0?'No':'Yes'}" style="cursor:pointer" readonly  onclick="swapBtnValues(this)">
+                        </td>
+                        <td class="border">
+                                	<input class="btn btn-danger w-25"  type="text" name="pcPrinterReturn"   th:class="${itSpecDetails.pcPrinterReturn==null  || itSpecDetails.pcPrinterReturn==0?'btn btn-danger w-25 ':'btn btn-success w-25'}" th:value="${itSpecDetails.pcPrinterReturn==null || itSpecDetails.pcPrinterReturn==0?'No':'Yes'}" style="cursor:pointer" readonly  onclick="swapBtnValues(this)">
+                        </td> 
+                     
+                        <td class="td-center-fill">
+                                	<input type="text" name="remark" th:value="${itSpecDetails.remark}" class="inp rounded" reqiured>
+                        </td>
+
+
+						 <td class="">
+                                 	<button  type="submit"  th:text="${itSpecDetails!=null AND itSpecDetails.isSubmitted==1?'Edit':'Save'}" class="btn btn-dark">Save</button>
+                         </td> 
+                         	
+                     		  </form>                                    
+                         </tr>                         
+                     </tbody>                   
+              </table>
+            </th:block>
+			</div>
+ 			<th:block th:if="${errorITSpec!=null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-danger w-50 m-auto">
+						<label  class="fb" th:text="${errorITSpec}"> </label>
+					</div>
+				</div>
+			 </th:block>
+			 	<th:block th:if="${successITSpec!=null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-success w-50 m-auto">
+						<label  class="fb" th:text="${successITSpec}"> </label>
+					</div>
+				</div>
+			 </th:block>
+		</div>		
+	</div>
+</body>
+<script>
+	function validateLoginName(obj){
+		if(obj.value.trim()!=''&&obj.value.trim()!='NA'){
+			document.getElementById('erpLogin').className="btn btn-success w-25 ";		
+			document.getElementById('erpLogin').value="Yes";
+		}else{
+			document.getElementById('erpLogin').className="btn btn-danger w-25 ";	
+			document.getElementById('erpLogin').value="No";
+		}
+	}
+</script>
+</html>

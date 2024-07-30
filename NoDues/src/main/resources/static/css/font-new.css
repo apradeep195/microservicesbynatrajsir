@@ -1,0 +1,32 @@
+.sm-text{
+    font-size: .57rem;
+}
+.md-text{
+    font-size: .8rem;
+}
+label{
+    font-size: .57rem !important;
+    margin: auto;
+}
+th{
+    font-size: .57rem !important;
+}
+input,label,th,td,select,option{
+    font-size: .57rem !important;
+}
+
+.page-heading{
+    font-size: 20px !important ;
+    text-shadow: 5px ;
+    font-weight: bolder;
+}
+.inp{
+    font-size: .57rem !important;
+}
+
+.btn{
+    font-size: .57rem !important;
+}
+.fb{
+    font-weight: bolder;
+}

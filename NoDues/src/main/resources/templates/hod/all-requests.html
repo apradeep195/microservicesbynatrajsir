@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Initiate Requests | NDMS</title>
+	<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/css/main.css}" rel="stylesheet" />
+	<link th:href="@{/css/navbar.css}" rel="stylesheet" />
+	<link th:href="@{/css/navbar_new.css}" rel="stylesheet" />
+	<link th:href="@{/newCss/dataTables.bootstrap4.min.css}" rel="stylesheet">
+	<link th:href="@{/css/table.css}" rel="stylesheet" />
+
+
+	<style>
+		body {
+			overflow-x: hidden;
+			/* Hide scrollbars */
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<div class="sidebar-parent" style="width: 4%">
+			<div th:replace="fragments/navbar :: navbar"></div>
+			<div th:replace="fragments/modals :: template"></div>
+			<div th:replace="fragments/modals :: center-temp"></div>
+			<div th:replace="fragments/modals :: logout"></div>
+			<div th:replace="fragments/modals :: error-modal"></div>
+			<div th:replace="fragments/modals :: simple-modal"></div>
+		</div>
+		<!--Sidebar parent-->
+
+		<div class="container2  mb-3" style="padding: 15px 10px 10px 10px">
+
+				
+				
+			<label class="fb mb-3" style="font-size:15px !important">Requests Pending for HOD Approval</label>
+
+			<div class="table-container table-responsive" style="border: none;">
+				<table class="table" id="example">
+					<thead class="bg-dark">
+						<tr>
+							<th>Emp Code</th>
+							<th>Emp Name</th>
+							<th>Designation</th>
+							<th>Department</th>
+							<th>Reason</th>
+							<th>Resign Date</th>
+							<th>Intiated Date</th>
+							<th>Last Working<br> Date</th>
+							<th>Action</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-bottom" th:each="pendingRequest : ${pendingRequests}">
+							<td th:text="${pendingRequest.EMPNO}"></td>
+							<td th:text="${pendingRequest.EMPNAME}"></td>
+							<td th:text="${pendingRequest.DESG}"></td>
+							<td th:text="${pendingRequest.DEPT}"></td>
+							<td th:text="${pendingRequest.RESIONDESC}"></td>
+
+							<td
+								th:text="${pendingRequest.RESIGN_DATE!=null?#dates.format(pendingRequest.RESIGN_DATE, 'dd-MMM-yyyy'):'-'}">
+							</td>
+							<td
+								th:text="${pendingRequest.INITIATE_DATE!=null?#dates.format(pendingRequest.INITIATE_DATE, 'dd-MMM-yyyy'):'-'}">
+							</td>
+							<td
+								th:text="${pendingRequest.LAST_WORKING_DATE!=null? #dates.format(pendingRequest.LAST_WORKING_DATE, 'dd-MMM-yyyy'):'-'}">
+							</td>
+
+
+
+							<form action="/ndmsAutomail/hodApproved.jsp" method="post">
+
+								<td>
+									<input type="text" class="d-none" name="reqId" th:value="${pendingRequest.REQID}">
+									<button type="submit" th:disabled="${pendingRequest.HOD_APPROVAL_STATUS>0}"
+										class="btn btn-dark">Approve</button>
+								</td>
+
+							</form>
+
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+
+
+
+
+		</div>
+
+
+	</div>
+
+
+	<script th:src="@{/newCss/jquery.min.js}"></script>
+	<!-- Bootstrap -->
+	<script th:src="@{/newCss/bootstrap.bundle.min.js}"></script>
+	<!-- Custom Theme Scripts -->
+	<script th:src="@{/newCss/custom.min.js}"></script>
+
+	<script th:src="@{/newCss/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/newCss/dataTables.bootstrap4.min.js}"></script>
+	<script th:src="@{/js/fontawesome.js}"></script>
+
+	<script>
+
+		$(document).ready(function () {
+			$('#example').DataTable();
+		});
+
+	</script>
+</body>
+
+</html>

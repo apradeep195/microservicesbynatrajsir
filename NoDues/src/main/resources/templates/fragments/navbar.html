@@ -1,0 +1,59 @@
+<div th:fragment="navbar" class="sidebar" style="width:4%">
+
+	<div class="header-content" style="text-align:center;">
+		<a href="http://192.168.9.111/employee.jsp" style="padding:0px">
+			<img class="header-image" th:src="@{/images_st/HEG_LOGO_CUT.jpg}"
+				style="margin-bottom:40px;width:100%;border-radius:6px">
+		</a>
+	</div>
+
+	<th:block th:if="${session.ROLE.contains('ASSOCIATE')}">
+		<a th:class="'nv-img '+${active_link!=null?(active_link=='admin'?'active':''):''}" th:href="@{/initiate/all}"
+			title="Requests">
+			<i class="fa-solid fa-share-from-square"></i></a>
+	</th:block>
+
+	<th:block th:if="${session.ROLE.contains('ADMIN')}">
+		<a th:class="'nv-img '+${active_link!=null?(active_link=='admin'?'active':''):''}"
+			th:href="@{/pendingRequest/all}" title="Pending All">
+			<i class="fa-solid fa-list-check"></i></a>
+
+		<a th:class="'nv-img '+${active_link!=null?(active_link=='admin'?'active':''):''}" th:href="@{/hr/all}"
+			title="HR-Approval">
+			<i class="fa-solid fa-building-user"></i> </a>
+	</th:block>
+
+	<th:block th:if="${session.ROLE.contains('HOD')}">
+		<a th:class="'nv-img '+${active_link!=null?(active_link=='admin'?'active':''):''}" th:href="@{/hod/all}"
+			title="HOD-approval">
+			<i class="fa-solid fa-chalkboard-user"></i></a>
+
+		<a th:class="'nv-img '+${active_link!=null?(active_link=='admin'?'active':''):''}"
+			th:href="@{/hod/leftEmployees}" title="Left Employee">
+			<i class="fa-solid fa-user-minus"></i></a>
+	</th:block>
+
+	<th:block th:if="${session.ROLE.contains('SECTION_AUTHORITY')}">
+		<a th:class="'nv-img '+${active_link!=null?(active_link=='admin'?'active':''):''}" th:href="@{/section/all}"
+			title="Section-pending">
+			<i class="fa-solid fa-file-pen"></i></a>
+
+
+		<a th:class="'nv-img '+${active_link!=null?(active_link=='admin'?'active':''):''}"
+			th:href="@{/section/sectionApproved}" title="section-approved">
+			<i class="fa-solid fa-check-double"></i></a>
+
+	</th:block>
+
+
+	<a class="nv-img" th:href="@{/invalidate}" title="Logout">
+		<i class="fa-solid fa-right-from-bracket"></i> </a>
+	<script>
+		if (navigator.userAgent.search("Firefox") >= 0) {$('body').addClass('firefox');}
+	</script>
+	<style>
+		body.firefox {
+			font-weight: normal;
+		}
+	</style>
+</div>

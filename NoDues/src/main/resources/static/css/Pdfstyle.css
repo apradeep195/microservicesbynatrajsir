@@ -1,0 +1,209 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 17 Oct, 2022, 12:22:35 PM
+    Author     : softwaredeveloper
+*/
+
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  color: #0087C3;
+  text-decoration: none;
+}
+
+body {
+  position: relative;
+  width: 21cm;  
+  height: 29.7cm; 
+  margin: 0 auto; 
+  color:black;
+  background: #FFFFFF; 
+  font-size: 14px; 
+}
+
+header {
+  padding: 10px 0;
+  margin-bottom: 20px;
+
+}
+
+#logo {
+  float: left;
+  margin-top: 8px;
+}
+
+#logo img {
+  height: 70px;
+}
+
+#company {
+   float: center;
+  text-align: center;
+  margin-left: 80px;
+  margin-top: 40px;
+  font-weight: bolder;
+}
+
+
+#details {
+  margin-bottom: 50px;
+}
+
+#client {
+  padding-left: 15px;
+border-left: 10px solid #e6b800;
+  float: left;
+  font-size: 15px;
+}
+
+#client .to {
+  color: #777777;
+}
+
+h2.name {
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 0;
+}
+
+#invoice {
+  float: right;
+  text-align: right;
+}
+
+#invoice h1 {
+  color: #0087C3;
+  font-size: 2.4em;
+  line-height: 1em;
+  font-weight: normal;
+  margin: 0  0 10px 0;
+}
+
+#invoice .date {
+  font-size: 1.1em;
+  color: #777777;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+  
+}
+
+table th {
+  padding: 5px;
+  background: #EEEEEE;
+  text-align: center;
+  border-bottom: 0px solid #777777;
+}
+
+table td {
+  padding: 5px;
+  background: #EEEEEE;
+  text-align: left;
+}
+
+table th {
+  white-space: nowrap;        
+  font-weight: normal;
+  font-weight: bold;
+}
+
+table td {
+  text-align: center;
+  background:white;
+}
+
+/*table td h3{
+  color: #57B223;
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0 0 0.2em 0;
+}*/
+
+
+
+/*table .qty {
+}*/
+/*
+table .total {
+  background: #57B223;
+  color: #FFFFFF;
+}*/
+
+/*table td.unit,
+table td.qty,
+table td.total {
+  font-size: 1em;
+}*/
+
+/*table tbody tr:last-child td {
+  border: none;
+}*/
+
+/*table tfoot td {
+  padding: 10px 20px;
+  background: #FFFFFF;
+  border-bottom: none;
+  font-size: 1.2em;
+  white-space: nowrap; 
+  border-top: 1px solid black; 
+}*/
+
+/*table tfoot tr:first-child td {
+  border-top: 1px solid #57B223; 
+}*/
+
+/*table tfoot tr:last-child td {
+  color: #57B223;
+  font-size: 1.4em;
+  border-top: 1px solid #57B223; 
+
+}*/
+
+/*table tfoot tr td:first-child {
+  border: 1px solid #57B223;
+}*/
+
+#thanks{
+  font-size: 1em;
+  margin-bottom: 50px;
+}
+
+#signature{
+  font-size: 1em;
+  margin-bottom: 50px;
+}
+#notices{
+  padding-left: 6px;
+  border-left: 6px solid #e78f08;  
+ 
+  
+}
+
+#notices .notice {
+  font-size: 1em;
+}
+
+footer {
+  color: #777777;
+  width: 100%;
+  height: 10px;
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid #AAAAAA;
+  padding: 8px 0;
+  text-align: center;
+}
+

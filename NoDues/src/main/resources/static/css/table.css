@@ -1,0 +1,199 @@
+.container2 {
+    padding: 100px;
+    width: 84%;
+}
+
+.table {
+    font-size: 0.7vw;
+}
+
+.table td {
+    padding-left: 1px;
+    padding-right: 1px;
+    font-weight: 600;
+    padding: 4px 0px 4px 0px;
+    vertical-align: baseline;
+}
+
+
+
+.table td {
+    vertical-align: inherit;
+    
+}
+
+td {
+    min-height: 40px !important;
+}
+
+
+
+@media only screen and (max-width: 1300px) {
+    .table {
+        font-size: 0.7vw;
+    }
+}
+
+.search-div {
+    padding-bottom: 5px;
+    height: auto;
+}
+
+.btn {
+    
+    font-size: 10px;
+}
+
+
+
+.form-control {
+    width: auto !important;
+   
+}
+
+
+
+option {
+    font-weight: 600;
+}
+
+table td {
+    padding: 0px;
+}
+
+table th,
+td {
+    text-align: center;
+}
+
+
+.table thead th {
+    vertical-align: inherit;
+    border-bottom: 2px solid #dee2e6;
+    text-align: center !important;
+}
+
+.td-fill {
+    position: relative;
+    text-align: left;
+    min-width: 8vw;
+}
+
+textarea {
+    outline: none;
+    font-weight: 900;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    resize: none;
+    -webkit-box-sizing: border-box;
+    
+    -moz-box-sizing: border-box;
+    
+    box-sizing: border-box;
+    
+}
+
+.td-sm-fill {
+    position: relative;
+    width: 1rem;
+}
+
+.td-sm-fill-te {}
+
+.sm-td {
+    width: 1rem;
+}
+
+.td-btn {
+    font-size: .6vw !important;
+    margin-left: 4px;
+    margin-right: 4px;
+    min-width: 3rem;
+}
+
+.sts-ip {
+    font-size: .6vw !important;
+}
+
+.td-center-fill {
+    position: relative;
+    overflow-wrap: break-word;
+}
+
+.dteInp {
+    width: 100%;
+    outline: none;
+    font-weight: inherit;
+    font-size: 7px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    resize: none;
+    border: 1px solid rgb(145, 143, 143);
+    -webkit-box-sizing: border-box;
+    /* <=iOS4, <= Android  2.3 */
+    -moz-box-sizing: border-box;
+    /* FF1+ */
+    box-sizing: border-box;
+    /* Chrome, IE8, Opera, Safari 5.1*/
+}
+
+.md-td {
+    max-width: 140px;
+    overflow-wrap: break-word;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+    text-align: center;
+}
+
+.inp {
+    /* border: none; */
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    outline: none;   
+    font-size: inherit;
+    border: 1px solid rgb(179, 179, 179);
+    padding: 0px 3px 0px 3px;
+}
+input:hover,select:hover{
+    border: 1px solid   #bf9f62;
+}
+.table th{
+    color: white;
+}
+
+
+.dataTables_info{
+	
+	font-size: 0.6rem !important;
+	
+}
+
+#example_paginate{
+	font-size: 0.6rem !important;
+	
+}
+
+#dataTables_length{
+		font-size: 0.6rem !important;
+	
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Initiate Requests | NDMS</title>
+	<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/css/main.css}" rel="stylesheet" />
+	<link th:href="@{/css/navbar.css}" rel="stylesheet" />
+	<link th:href="@{/css/navbar_new.css}" rel="stylesheet" />
+	<link th:href="@{/newCss/dataTables.bootstrap4.min.css}" rel="stylesheet">
+	<link th:href="@{/css/table.css}" rel="stylesheet" />
+
+
+	<style>
+		body {
+			overflow-x: hidden;
+			/* Hide scrollbars */
+		}
+		span{
+			font-size: 10px;
+		}
+		.badge{
+			 letter-spacing: 0.03cm;
+			 padding: 3px;
+			   text-transform: uppercase;
+			  
+		}
+		.bg-info{
+			  background-color: #0DCAF0 !important;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<div class="sidebar-parent" style="width: 4%">
+			<div th:replace="fragments/navbar :: navbar"></div>
+			<div th:replace="fragments/modals :: template"></div>
+			<div th:replace="fragments/modals :: center-temp"></div>
+			<div th:replace="fragments/modals :: logout"></div>
+			<div th:replace="fragments/modals :: error-modal"></div>
+			<div th:replace="fragments/modals :: simple-modal"></div>
+		</div>
+		<!--Sidebar parent-->
+
+		<div class="container2  mb-3" style="padding: 15px 10px 10px 10px">			
+				
+			<label class="fb mb-3" style="font-size:15px !important">Requests Pending for HOD Approval</label>
+
+			<div class="table-container table-responsive" style="border: none;">
+				<table class="table table-hover " id="example">
+					<thead class="bg-dark">
+						<tr>
+							<th>Req No</th>
+							<th>Emp Name (Ecno)</th>							
+							<th>Designation (Dept)</th>
+							<th>Reason</th>
+							<th>Resign Date</th>
+							<th>Intiated Date</th>
+							<th>Last Working<br> Date</th>
+							<th>HOD<br>(Approved Date) </th>
+							<th>HR<br>(Approved Date)</th>
+							<th>IT<br>(Approved Date)</th>
+							<th>Library<br>(Approved Date)</th>
+							<th>Admin<br>(Approved Date)</th>
+							<th>Accounts <br> (Approved Date)</th>
+							<th>Stores<br>(Approved Date)</th>
+							<th>Mediclaim<br>(Approved Date)</th>
+							<th>Time Office<br>(Approved Date)</th>
+							<th>Society<br>(Approved Date)</th>
+
+			</tr>
+					</thead>
+					<tbody>
+						<tr class="border-bottom" th:each="deptLeftEmployee : ${deptLeftEmployees}">
+							<td th:text="${deptLeftEmployee.REQID}"></td>
+							<td><span th:text="${deptLeftEmployee.EMPNAME}"></span><br> <span class="badge bg-info text-dark" th:text="${deptLeftEmployee.EMPNO}"></span></td>	
+							<td><span th:text="${deptLeftEmployee.DESIGNATION}"></span><br> <span class="badge bg-info text-dark" th:text="${deptLeftEmployee.DEPARTMENTT}"></span></td>
+							<td><span th:text="${deptLeftEmployee.RESIONDESC}"></span> </td>
+							<td th:text="${deptLeftEmployee.RESIGNDATE!=null?#dates.format(deptLeftEmployee.RESIGNDATE, 'dd-MMM-yyyy'):'-'}"></td>
+							<td th:text="${deptLeftEmployee.INITIATEDDATE!=null?#dates.format(deptLeftEmployee.INITIATEDDATE, 'dd-MMM-yyyy'):'-'}"></td>
+							<td th:text="${deptLeftEmployee.LASTWORKINGDATE!=null?#dates.format(deptLeftEmployee.LASTWORKINGDATE, 'dd-MMM-yyyy'):'-'}"></td>
+							<td><span th:text="${deptLeftEmployee.HODNAME}"></span><br> 
+							<span class="badge bg-info text-dark" 	th:text="${deptLeftEmployee.HODAPPROVEDATE!=null?#dates.format(deptLeftEmployee.HODAPPROVEDATE, 'dd-MMM-yyyy'):'-'}" ></span></td>
+							
+							<td><span th:text="${deptLeftEmployee.HRNAME}"></span>
+							<br><span class="badge bg-info text-dark"  th:text="${deptLeftEmployee.HRAPPROVEDATE!=null?#dates.format(deptLeftEmployee.HRAPPROVEDATE, 'dd-MMM-yyyy'):'-'}" ></span></td>	
+													
+							<td><span th:text="${deptLeftEmployee.ITNAME}"></span>
+							<br> <span class="badge bg-info text-dark" th:text="${deptLeftEmployee.ITDATE!=null?#dates.format(deptLeftEmployee.ITDATE, 'dd-MMM-yyyy'):'-'}"></span></td>	
+													
+							<td><span th:text="${deptLeftEmployee.LIBNAME}"></span>
+							<br> <span class="badge bg-info text-dark" th:text="${deptLeftEmployee.LIBDATE!=null?#dates.format(deptLeftEmployee.LIBDATE, 'dd-MMM-yyyy'):'-'}"></span></td>
+							
+														
+							<td><span th:text="${deptLeftEmployee.ADMINNAME}"></span>
+							<br> <span class="badge bg-info text-dark" th:text="${deptLeftEmployee.ADMINDATE!=null?#dates.format(deptLeftEmployee.ADMINDATE, 'dd-MMM-yyyy'):'-'}"></span></td>
+								
+													
+							<td><span th:text="${deptLeftEmployee.STORENAME}"></span>
+							<br> <span class="badge bg-info text-dark" th:text="${deptLeftEmployee.STOREDATE!=null?#dates.format(deptLeftEmployee.STOREDATE, 'dd-MMM-yyyy'):'-'}"></span></td>
+							
+							
+							<td><span th:text="${deptLeftEmployee.ACCNTNAME}"></span>
+							<br> <span class="badge bg-info text-dark" th:text="${deptLeftEmployee.ACCNTDATE!=null?#dates.format(deptLeftEmployee.ACCNTDATE, 'dd-MMM-yyyy'):'-'}"></span></td>
+							
+							
+							<td><span th:text="${deptLeftEmployee.MEDINAME}"></span>
+							<br> <span class="badge bg-info text-dark"  th:text="${deptLeftEmployee.MEDIDATE!=null?#dates.format(deptLeftEmployee.MEDIDATE, 'dd-MMM-yyyy'):'-'}"></span></td>
+							
+							
+							<td><span th:text="${deptLeftEmployee.TIMEOFFICENAME}"></span>
+							<br> <span class="badge bg-info text-dark" th:text="${deptLeftEmployee.TIMEOFFICEDATE!=null?#dates.format(deptLeftEmployee.TIMEOFFICEDATE, 'dd-MMM-yyyy'):'-'}"></span></td>
+							
+							
+							<td><span th:text="${deptLeftEmployee.SOCIETYNAME}"></span>
+							<br> <span class="badge bg-info text-dark"  th:text="${deptLeftEmployee.SOCIETYDATE!=null?#dates.format(deptLeftEmployee.SOCIETYDATE, 'dd-MMM-yyyy'):'-'}"></span></td>
+							
+					
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+
+
+
+
+		</div>
+
+
+	</div>
+
+
+	<script th:src="@{/newCss/jquery.min.js}"></script>
+	<!-- Bootstrap -->
+	<script th:src="@{/newCss/bootstrap.bundle.min.js}"></script>
+	<!-- Custom Theme Scripts -->
+	<script th:src="@{/newCss/custom.min.js}"></script>
+
+	<script th:src="@{/newCss/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/newCss/dataTables.bootstrap4.min.js}"></script>
+	<script th:src="@{/js/fontawesome.js}"></script>
+
+	<script>
+
+		$(document).ready(function () {
+			$('#example').DataTable();
+		});
+
+	</script>
+</body>
+
+</html>

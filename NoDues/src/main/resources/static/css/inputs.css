@@ -1,0 +1,6 @@
+
+.form-control:focus{
+	border: 1px solid   #bf9f62;
+    outline: none;
+    box-shadow: none;
+}

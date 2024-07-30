@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Initiate Requests | NDMS</title>
+	<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/css/main.css}" rel="stylesheet" />
+	<link th:href="@{/css/navbar.css}" rel="stylesheet" />
+	<link th:href="@{/css/navbar_new.css}" rel="stylesheet" />
+	<link th:href="@{/newCss/dataTables.bootstrap4.min.css}" rel="stylesheet">
+	<link th:href="@{/css/table.css}" rel="stylesheet" />
+	<style>
+		body {
+			overflow-x: hidden;
+			/* Hide scrollbars */
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<div class="sidebar-parent" style="width: 4%">
+			<div th:replace="fragments/navbar :: navbar"></div>
+			<div th:replace="fragments/modals :: template"></div>
+			<div th:replace="fragments/modals :: center-temp"></div>
+			<div th:replace="fragments/modals :: logout"></div>
+			<div th:replace="fragments/modals :: error-modal"></div>
+			<div th:replace="fragments/modals :: simple-modal"></div>
+		</div>
+		<!--Sidebar parent-->
+
+		<div class="container2  mb-3" style="padding: 15px 10px 10px 10px">
+		
+			<div th:replace="fragments/search :: nav-btn"></div>
+			
+
+			<div class="table-container table-responsive" style="border: none;">
+				<table class="table" id="example">
+					<thead class="bg-dark">
+						<tr>
+							<th>Emp. No.</th>
+							<th>Emp. Name</th>
+							<th>Designation</th>
+							<th>Department</th>
+							<th>Resign Date</th>
+							<th>Last Working Date</th>
+							<th>Reason</th>
+							<th>Eligible for Approval</th>
+							<th>Approved</th>
+							<th>Action</th>
+							<th>Show</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-bottom" th:each="resign : ${hrPendings}">
+
+							<td th:text="${resign.EMPNO}"></td>
+							<td th:text="${resign.EMPNAME}"></td>
+							<td th:text="${resign.DESG}"></td>
+							<td th:text="${resign.DEPT}"></td>
+							<td
+								th:text="${resign.RESIGN_DATE!=null?#dates.format(resign.RESIGN_DATE, 'dd-MMM-yyyy'):'-'}">
+							</td>
+							<td
+								th:text="${resign.LAST_WORKING_DATE!=null?#dates.format(resign.LAST_WORKING_DATE, 'dd-MMM-yyyy'):'-'}">
+							</td>
+							<td th:text="${resign.RESIONDESC}"></td>
+
+
+							<td>
+								<th:block th:if="${reqDept.get(resign.REQID)!=null&&reqDept.get(resign.REQID)!=''}">
+									<span class="text-danger">&#x2716;</span>
+								</th:block>
+								<th:block th:if="${!(reqDept.get(resign.REQID)!=null&&reqDept.get(resign.REQID)!='')}">
+									<span class="text-success">&#10003;</span>
+								</th:block>
+							</td>
+
+							<td>
+								<th:block th:if="${resign.HR_HEAD_APPROVA_STATUS==0}">
+									<span class="text-danger">&#x2716;</span>
+								</th:block>
+								<th:block th:if="${resign.HR_HEAD_APPROVA_STATUS>0}">
+									<span class="text-success">&#10003;</span>
+								</th:block>
+							</td>
+
+							<td>
+								<form th:action="@{/hr/approve}" method="post" class="m-0">
+									<input type="text" class="d-none" name="reqId" th:value="${resign.REQID}">
+									<button type="submit"
+										th:disabled="${(reqDept.get(resign.REQID)!=null&&reqDept.get(resign.REQID)!='') OR (resign.HR_HEAD_APPROVA_STATUS>0)}"
+										class="btn btn-dark">Approve</button>
+								</form>
+							</td>
+
+
+							<td>
+								<form th:action="@{/hr/viewStatus}" target="newtab" method="post" class="m-0">
+									<input type="text" class="d-none" name="reqId" th:value="${resign.REQID}">
+									<button type="submit" class="btn btn-dark">View Status</button>
+								</form>
+							</td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{/newCss/jquery.min.js}"></script>
+	<!-- Bootstrap -->
+	<script th:src="@{/newCss/bootstrap.bundle.min.js}"></script>
+	<!-- Custom Theme Scripts -->
+	<script th:src="@{/newCss/custom.min.js}"></script>
+	<script th:src="@{/newCss/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/newCss/dataTables.bootstrap4.min.js}"></script>
+	<script th:src="@{/js/fontawesome.js}"></script>
+
+	<script>
+
+		$(document).ready(function () {
+			$('#example').DataTable();
+		});
+
+	</script>
+</body>
+
+</html>

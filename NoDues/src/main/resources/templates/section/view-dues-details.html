@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sections Pending Requests | NDMS</title>
+<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet" />	
+	<link th:href="@{/css/main.css}" rel="stylesheet" />
+	<link th:href="@{/css/navbar.css}" rel="stylesheet" />
+	<link th:href="@{/css/navbar_new.css}" rel="stylesheet" />	
+	<link th:href="@{/newCss/dataTables.bootstrap4.min.css}" rel="stylesheet">
+	<link th:href="@{/css/table.css}" rel="stylesheet" />
+	<script th:src="@{/js/fontawesome.js}"></script>
+</head>
+<style>
+body {
+	overflow-x: hidden; /* Hide scrollbars */
+}
+
+#dues-details td {
+	padding: 10px 0px 10px 0px !important;
+}
+</style>
+<body>
+
+	<div id="wrapper">
+		<div class="sidebar-parent" style="width: 4%">
+			<div th:replace="fragments/navbar :: navbar"></div>
+			<div th:replace="fragments/modals :: template"></div>
+			<div th:replace="fragments/modals :: center-temp"></div>
+			<div th:replace="fragments/modals :: logout"></div>
+			<div th:replace="fragments/modals :: error-modal"></div>
+			<div th:replace="fragments/modals :: simple-modal"></div>
+		</div>
+		<!--Sidebar parent-->
+
+		<div class="container2  mb-3" style="padding: 15px 10px 10px 10px">
+
+
+			<div class="table-container table-responsive" style="border: none;">
+			
+			<label class="w-100 mb-3 text-center fb"
+					style="font-size: 11px !important;">Employee Details</label>
+		
+			<table class="table" id="dues-details">
+					<thead class="bg-dark">
+						<tr>
+							<th>Employee Code</th>
+							<th>Name</th>
+							<th>Designation</th>
+							<th>Department</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-bottom"	>				
+							<td th:text="${empInfo.EMPNO}"></td>
+							<td th:text="${empInfo.EMPNAME}"></td>
+							<td th:text="${empInfo.DESG}"></td>
+							<td th:text="${empInfo.DEPT}"></td>
+						</tr>
+					</tbody>
+				</table>
+			
+			
+				<label class="w-100 my-3 text-center fb"
+					style="font-size: 11px !important;">Due Details</label>
+					
+				<table class="table  " id="dues-details">
+					<thead class="bg-dark">
+						<tr>
+							<th>Req ID.</th>
+							<th>Due Details.</th>
+							<th>Due Amount</th>
+							<th>Type</th>
+							<th>Entry By</th>
+							<th>Entry Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-bottom"
+							th:each="section,iState : ${sectionDues}">
+							<td th:text="${section.REQ_ID}"></td>
+							<td th:text="${section.DUE_DETAIL}"></td>
+							<td th:text="${section.DUE_AMOUNT}"></td>
+							<td><th:block th:each="auth,iState : ${authSections}">
+									<th:block th:if="${section.SEC_ID==auth.ID}">
+										<span th:text="${auth.SEC_DESC.toUpperCase()}"></span>
+									</th:block>
+								</th:block></td>
+							<td th:text="${section.ENTRD_BY_NAME}"></td>
+							<td
+								th:text="${section.ENTERED_DATE!=null?#dates.format(section.ENTERED_DATE, 'dd-MMM-yyyy'):'-'}"></td>
+						</tr>
+					</tbody>
+				</table>
+				
+
+				
+			 <th:block th:if="${isEmpty!=null AND error==null AND successDueSubmit==null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-danger m-0">
+						<label class="fb">No Data Found </label>
+					</div>
+				</div>
+		 	</th:block>
+		 	
+		 	
+		 		<th:block th:if="${errorDueSubmit!=null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-danger w-50 m-auto">
+						<label  class="fb" th:text="${errorDueSubmit}"> </label>
+					</div>
+				</div>
+			 </th:block>
+			 	<th:block th:if="${successDueSubmit!=null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-success w-100 m-auto">
+						<label  class="fb" th:text="${successDueSubmit}"> </label>
+					</div>
+				</div>
+			 </th:block> 
+			
+				
+             	<th:block th:if="${errorAddDues!=null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-danger w-50 m-auto">
+						<label  class="fb" th:text="${errorAddDues}"> </label>
+					</div>
+				</div>
+			 </th:block>
+			 	<th:block th:if="${successAddDues!=null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-success w-50 m-auto">
+						<label  class="fb" th:text="${successAddDues}"> </label>
+					</div>
+				</div>
+			 </th:block>
+                   
+              
+              <th:block th:if="${IT!=null}">
+                   
+                 <label class="w-100 my-3 text-center fb" style="font-size: 11px !important;">IT Specific Details</label>
+                 <table class="table w-100  mx-auto ">
+                     <thead class="bg-dark">
+                         <tr>      
+                             <th>ERP User <br>Name</th>   
+                             <th>ERP Available</th>   
+                             <th>ERP Removed</th>           
+                             <th>Mail Type</th>
+                             <th>Mail Removed</th>                           
+                             <th>Automail Status</th>
+                             <th>Automail Removed</th>
+                             <th>PC / Printer<br>(Default - No)</th>  
+                             <th>PC / Printer<br>Returned</th>      
+                             <th>Remark<br>(Not Required)</th>                            
+                             
+                         </tr>
+                     </thead> 
+                     <tbody>
+                         <tr class="border">                                     
+                         <td class="border td-center-fill"><span th:text="${itSpecDetails.ERPLOGIN}"></span></td>
+                         <td class="border td-center-fill">
+                          <th:block th:if="${itSpecDetails.ERPLOGINSTATUS==0}">
+									<span class="text-danger">NO</span>
+								</th:block>
+								<th:block th:if="${itSpecDetails.ERPLOGINSTATUS==1}">
+									<span class="text-success">YES</span>
+								</th:block>
+                         
+                         </td>
+                         <td class="border td-center-fill">
+                         
+                          <th:block th:if="${itSpecDetails.ERPLOGINACTION==0}">
+									<span class="text-danger">NO</span>
+								</th:block>
+								<th:block th:if="${itSpecDetails.ERPLOGINACTION==1}">
+									<span class="text-success">YES</span>
+								</th:block>
+                         </td>
+                         <td class="border td-center-fill"><span th:text="${itSpecDetails.MAILTYPE}"></span></td>
+                         <td class="border td-center-fill">
+                         <th:block th:if="${itSpecDetails.MAILREMOVED==0}">
+									<span class="text-danger">NO</span>
+								</th:block>
+								<th:block th:if="${itSpecDetails.MAILREMOVED==1}">
+									<span class="text-success">YES</span>
+								</th:block>
+								
+                         </td>
+                         <td class="border td-center-fill">                         
+                         <th:block th:if="${itSpecDetails.AUTOMAILALLOTED==0}">
+									<span class="text-danger">NO</span>
+								</th:block>
+								<th:block th:if="${itSpecDetails.AUTOMAILALLOTED==1}">
+									<span class="text-success">YES</span>
+								</th:block>
+								
+								</td>
+                         <td class="border td-center-fill">                         
+                         <th:block th:if="${itSpecDetails.AUTOMAILREMOVED==0}">
+									<span class="text-danger">NO</span>
+								</th:block>
+								<th:block th:if="${itSpecDetails.AUTOMAILREMOVED==1}">
+									<span class="text-success">YES</span>
+								</th:block>								
+								</td>
+                         <td class="border td-center-fill">
+                         <th:block th:if="${itSpecDetails.PRINTERALLOTED==0}">
+									<span class="text-danger">NO</span>
+								</th:block>
+								<th:block th:if="${itSpecDetails.PRINTERALLOTED==1}">
+									<span class="text-success">YES</span>
+								</th:block>
+                         </td>
+                         <td class="border td-center-fill">
+                         <th:block th:if="${itSpecDetails.PRINTEREMOVED==0}">
+									<span class="text-danger">NO</span>
+								</th:block>
+								<th:block th:if="${itSpecDetails.PRINTEREMOVED==1}">
+									<span class="text-success">YES</span>
+								</th:block>
+                         </td>
+                         <td class="border td-center-fill"><span th:text="${itSpecDetails.REMARK}"></span></td>                                                            
+                         </tr>                         
+                     </tbody>                   
+              </table>
+            </th:block>
+			</div>
+ 			<th:block th:if="${errorITSpec!=null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-danger w-50 m-auto">
+						<label  class="fb" th:text="${errorITSpec}"> </label>
+					</div>
+				</div>
+			 </th:block>
+			 	<th:block th:if="${successITSpec!=null}">
+				<div class="test"
+					style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-success w-50 m-auto">
+						<label  class="fb" th:text="${successITSpec}"> </label>
+					</div>
+				</div>
+			 </th:block>
+		</div>		
+	</div>
+</body>
+<script>
+	function validateLoginName(obj){
+		if(obj.value.trim()!=''&&obj.value.trim()!='NA'){
+			document.getElementById('erpLogin').className="btn btn-success w-25 ";		
+			document.getElementById('erpLogin').value="Yes";
+		}else{
+			document.getElementById('erpLogin').className="btn btn-danger w-25 ";	
+			document.getElementById('erpLogin').value="No";
+		}
+	}
+</script>
+</html>

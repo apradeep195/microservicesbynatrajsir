@@ -1,0 +1,15 @@
+.btn-div{
+	 margin-top:8px;
+     width:100%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+}
+.btn-div .btn{
+	padding:0px;
+	margin:0px 5px 0px 5px;
+	border-radius: 15px;
+    font-size: 11px;
+    width: 50px;
+    height: 25px;
+}

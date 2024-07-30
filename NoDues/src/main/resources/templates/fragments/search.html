@@ -1,0 +1,16 @@
+<div th:fragment="nav-btn" class=" state-btns mt-lg-2 mb-lg-3">
+
+	
+	<th:block th:if="${session.ROLE.contains('SECTION_AUTHORITY')}">
+		<a class="btn btn-primary" th:href="@{/initiate/all}"
+			th:text="${'Initiate Request ('+counts.InitiateReqs+')'}"></a>
+	</th:block>	
+
+	<th:block th:if"${session.ROLE.contains('ADMIN') OR session.ROLE.contains('ASSOCIATE')}">		
+			<a class="btn btn-warning " th:href="@{/pendingRequest/all}"
+			th:text="${'Pending Request ('+counts.pendingReqs+')'}"></a>
+			<a class="btn btn-success" th:href="@{/approved/all}"
+			th:text="${'Approved No Dues  ('+counts.ApproveReqs+')'}"></a>
+	</th:block>
+
+</div>

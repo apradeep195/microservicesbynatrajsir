@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Initiate Requests | NDMS</title>
+	<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet" />	
+	<link th:href="@{/css/main.css}" rel="stylesheet" />
+	<link th:href="@{/css/navbar.css}" rel="stylesheet" />
+	<link th:href="@{/css/navbar_new.css}" rel="stylesheet" />	
+	<link th:href="@{/newCss/dataTables.bootstrap4.min.css}" rel="stylesheet">
+	<link th:href="@{/css/table.css}" rel="stylesheet" />
+
+	<style>
+		body {
+			overflow-x: hidden;
+			/* Hide scrollbars */
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<div class="sidebar-parent" style="width: 4%">
+			<div th:replace="fragments/navbar :: navbar"></div>
+			<div th:replace="fragments/modals :: template"></div>
+			<div th:replace="fragments/modals :: center-temp"></div>
+			<div th:replace="fragments/modals :: logout"></div>
+			<div th:replace="fragments/modals :: error-modal"></div>
+			<div th:replace="fragments/modals :: simple-modal"></div>
+		</div>
+		<!--Sidebar parent-->
+
+		<div class="container2  mb-3" style="padding: 15px 10px 10px 10px">
+
+			<div th:replace="fragments/search :: nav-btn"></div>
+
+			<div class="table-container table-responsive" style="border: none;">
+				<table class="table" id="example">
+					<thead class="bg-dark text-white">
+						<tr>
+							<th>EMP No</th>
+							<th>EMP Name</th>
+							<th>Designation</th>
+							<th>Dept Name</th>
+							<th>Last Working Date</th>							
+							<th>Reporting Officer</th>
+							<th>HOD Name</th>
+							<th>Resign Date</th>
+							<th>Exgratia</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="border-bottom" th:each="resignation : ${resignations}">
+							<td th:text="${resignation.EMPCODE}"></td>
+							<td th:text="${resignation.EMPNAME}"></td>
+							<td th:text="${resignation.DESG}"></td>
+							<td th:text="${resignation.DEPTDESC}"></td>
+							
+								<td
+								th:text="${resignation.LASTDATE!=null?#dates.format(resignation.LASTDATE, 'dd-MMM-yyyy'):'-'}">
+							</td>
+							
+							<td th:text="${resignation.REPOSTINGOFFICE}"></td>
+							<td th:text="${resignation.PENDINGWITH}"></td>
+
+							<form action="/ndmsAutomail/intiate.jsp" method="post">
+								
+								<td class="td-center-fill" style="min-width: 70px">
+									<input type="text"  name="empCode" th:value="${resignation.EMPCODE}">
+									<input type="date" name="resignDate" class="inp rounded" required>
+								</td>
+
+								<td class="td-center-fill" style="min-width: 70px">
+									<input type="number" name="exgratia"
+										th:disabled="${resignation.CATCODE.equals('100')?false:true}"
+										class="inp rounded"
+										th:required="${resignation.CATCODE.equals('100')?true:false}">
+								</td>
+
+								<td> <button type="submit" class="btn btn-dark">Initiate</button></td>
+
+							</form>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<th:block th:if="${resignations.size==0  OR  resignations ==null}">
+				<div class="test" style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-danger">
+						<label>No Records Available </label>
+					</div>
+				</div>
+			</th:block>
+
+
+			<th:block th:if="${error!=null}">
+				<div class="test" style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-danger">
+						<label th:text="${error}"> </label>
+					</div>
+				</div>
+			</th:block>
+
+			<th:block th:if="${isEmpty!=null AND error==null}">
+				<div class="test" style="text-align: center; padding: 10px 0px 10px 0px">
+					<div class="alert alert-danger">
+						<label>No Data Found </label>
+					</div>
+				</div>
+			</th:block>
+		</div>
+
+
+	</div>
+
+
+	<script th:src="@{/newCss/jquery.min.js}"></script>
+	<!-- Bootstrap -->
+	<script th:src="@{/newCss/bootstrap.bundle.min.js}"></script>
+	<!-- Custom Theme Scripts -->
+	<script th:src="@{/newCss/custom.min.js}"></script>
+
+	<script th:src="@{/newCss/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/newCss/dataTables.bootstrap4.min.js}"></script>
+<script th:src="@{/js/fontawesome.js}"></script>
+	<script>
+
+		$(document).ready(function () {
+			$('#example').DataTable();
+		});
+
+	</script>
+</body>
+
+</html>

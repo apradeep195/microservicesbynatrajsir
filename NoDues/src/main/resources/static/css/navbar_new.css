@@ -1,0 +1,37 @@
+.sidebar{
+    background-color: #1B1B1B;
+    border: 0px solid black;
+}
+.nv-img{
+  margin-left: auto;
+  padding-left: .8vw !important;
+} 
+.container2{
+    width:96% !important;
+}
+
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+  
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+
+  .btn{
+      background-color: none !important;
+  }
+  .p-0{
+      padding: 0px !important;
+  }
+  
+  .sidebar-parent{
+    width:4% !important;
+  }
