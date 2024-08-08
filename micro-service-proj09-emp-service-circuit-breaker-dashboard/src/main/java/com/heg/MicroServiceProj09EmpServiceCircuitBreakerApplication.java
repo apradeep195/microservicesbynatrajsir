@@ -6,10 +6,10 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 
 @SpringBootApplication
 @EnableHystrix
-public class MicroServiceProj08EmpServiceCircuitBreakerApplication {
+public class MicroServiceProj09EmpServiceCircuitBreakerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MicroServiceProj08EmpServiceCircuitBreakerApplication.class, args);
+		SpringApplication.run(MicroServiceProj09EmpServiceCircuitBreakerApplication.class, args);
 	}
 
 }

@@ -3,13 +3,15 @@ package com.heg;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 
 @SpringBootApplication
 @EnableHystrix
-public class MicroServiceProj08EmpServiceCircuitBreakerApplication {
+@EnableHystrixDashboard
+public class MicroServiceProj10HystrixDashboardApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MicroServiceProj08EmpServiceCircuitBreakerApplication.class, args);
+		SpringApplication.run(MicroServiceProj10HystrixDashboardApplication.class, args);
 	}
 
 }

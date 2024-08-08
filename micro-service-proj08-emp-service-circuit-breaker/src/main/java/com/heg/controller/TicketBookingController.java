@@ -8,25 +8,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
-
-
 @RestController
 @RequestMapping("/ticket")
-public class TicketBookingRestController {
+public class TicketBookingController {
 
 	@GetMapping("/book")
 	@HystrixCommand(fallbackMethod = "dummyBookTicket")
 	public String bookTicket() {
-		System.out.println("TicketBookingRestController.bookTicket()");
-		if(new Random().nextInt(10)<9 )
-			throw new RuntimeException("Problem is b. logic");
-		
-		return "out from b.logic";
+		System.out.println("TicketBookingController.bookTicket()");
+		if(new Random().nextInt(10)<9)
+			throw new RuntimeException("Problem in b.logic");
+	
+		return "Output from b.Logic";
 	}
 	
-	
 	public String dummyBookTicket() {
-		System.out.println("TicketBookingRestController.dummyBookTicket()");
-		return "Please try again after 30 minutes , Server is down";
+		System.out.println("TicketBookingController.dummyBookTicket()");
+		return "Please try later - inconvience is regratted";
 	}
 }
